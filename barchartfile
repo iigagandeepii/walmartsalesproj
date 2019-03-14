@@ -1,0 +1,50 @@
+import pandas
+import numpy as np
+from matplotlib import pyplot as plt
+
+plt.rcdefaults()
+
+a= pandas.read_csv('C:\\Users\\Gagan Deep\\Downloads\\wallmart-sales-forecast-datasets\\split1.csv',nrows=50)
+
+idy= a['year']
+year1 = idy.values
+year = year1.tolist()
+
+idm = a['month']
+mon1 = idm.values
+month = mon1.tolist()
+
+idd = a['day']
+day1 = idd.values
+day = day1.tolist()
+
+date = a['date']
+date1 = date.values
+datek=date1.tolist()
+
+ws = a['Weekly_Sales']
+ws1 = ws.values
+wsc = ws1.tolist()
+
+label = []
+wslist = []
+
+j=0
+
+for i in year :
+    if int (i) ==2013 :
+        label.append(date[j])
+        wslist.append(wsc[j])
+    j+=1
+
+print (label)
+print (wslist)
+
+index = np.arange(len(label))
+plt.bar(index, wslist)
+plt.xlabel('Date',fontsize=5)
+plt.ylabel('Weekly Sales', fontsize=5)
+plt.xticks(index, label,rotation=25)
+plt.title(' Weekly Sales for 2013')
+plt.tick_params(width=2.5)
+plt.show()
