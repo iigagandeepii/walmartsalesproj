@@ -1,0 +1,25 @@
+from pandas import read_csv
+import pandas
+
+df=read_csv('C:\\Users\\Gagan Deep\\Downloads\\wallmart-sales-forecast-datasets\\result.csv')
+
+new=df['Id'].str.split("_",n=-1,expand=True)
+
+df['store']=new[0]
+df['dept']=new[1]
+df['date']=new[2]
+
+new1=df['date'].str.split("-",n=-1,expand=True)
+df['year']=new1[0]
+df['month']=new1[1]
+df['day']=new1[2]
+
+df.drop(columns="Id",inplace=True)
+df.to_csv('C:\\Users\\Gagan Deep\\Downloads\\wallmart-sales-forecast-datasets\\split1.csv',index=False)
+
+import csv
+with open('C:\\Users\\Gagan Deep\\Downloads\\wallmart-sales-forecast-datasets\\split1.csv','rt') as f:
+    reader=csv.DictReader(f)
+    rows=[row for row in reader if row['store']=='1' and row['dept']=='1']
+for row in rows:
+    print(row)
