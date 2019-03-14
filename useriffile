@@ -1,0 +1,66 @@
+from pandas import read_csv
+import pandas
+
+store = input("enter the store number from 1 to 45 only")
+dept = input("enter the department number 1 to 99 only ")
+dd = input('Enter date ie day, month, year while pressing return after each')
+mm = input('Enter month = 01,02,03......')
+yyyy=input('enter only 2012 to 2013')
+
+dat = yyyy+'-'+mm+'-'+dd
+print(dat)
+
+a = read_csv('C:\\Users\\Gagan Deep\\Downloads\\wallmart-sales-forecast-datasets\\split1.csv')
+
+idy= a['year']
+year1 = idy.values
+idm = a['month']
+mon1 = idm.values
+idd = a['day']
+day1 = idd.values
+date = a['date']
+date1 = date.values
+ws = a['Weekly_Sales']
+ws1 = ws.values
+st = a['store']
+st1 = st.values
+de=a['dept']
+dep = de.values
+
+j=0
+salesatday = 0
+
+wsc = ws1.tolist()
+year = year1.tolist()
+month = mon1.tolist()
+day = day1.tolist()
+datek=date1.tolist()
+stor = st1.tolist()
+depart = dep.tolist()
+
+for i in datek :
+    if int(store) == int(stor[j]):
+        if int(dept) == depart[j]:
+            if str(yyyy)==str(year[j]):
+                if str(mm)==str(month[j]):
+                    if int(dd)==day[j]:
+                        salesatday = wsc[j]
+                        break
+                    else :
+                        print('here')
+                        low = wsc[j]
+                        if (depart[j + 1] != int(dept)):
+                            salesatday = wsc[j]
+                            break
+                        else:
+                            high = wsc[j+1]
+                        salesatday = (low+high)/2
+                        break
+                else:
+                    if (depart[j+1] != int(dept)) :
+                        salesatday=wsc[j]
+                    elif (depart[j-1]!=int(dept)):
+                        salesatday=wsc[j]
+    j+=1
+
+print ('At the Store No.'+str(store)+'\n Department No.'+str(dept)+'\n on the week of the entered date '+str(dat)+'\n the Weekly Sales was = '+str(salesatday))
